@@ -1,33 +1,23 @@
 package com.iti.validators.password
 
-import org.scalatest.WordSpec
 import com.iti.passwordvalidationapi.validators.password.AtLeastOneDigitValidator
-import com.iti.passwordvalidationapi.validators.password.PasswordValidatorBuilder
+import org.scalatest.WordSpec
 
-class AtLeastOneDigitValidatorSpec extends WordSpec {
-  val passwordValidatorBuilder = new PasswordValidatorBuilder(AtLeastOneDigitValidator())
+class AtLeastOneDigitValidatorSpec extends WordSpec with SharedAtLeastOneValidatorBehaviors {
+  val lowerCaseDescription = "digit"
+  val validator = AtLeastOneDigitValidator()
 
   "return true" when {
-    "has at least one digit" in {
-      assert(passwordValidatorBuilder.isValid("a1"))
-    }
+    behave like hasAtLeastOne(lowerCaseDescription, validator)
 
-    "has only digits" in {
-      assert(passwordValidatorBuilder.isValid("123"))
-    }
+    behave like hasOnly(lowerCaseDescription, "123", validator)
 
-    "has more than one digit" in {
-      assert(passwordValidatorBuilder.isValid("abc123"))
-    }
+    behave like hasMoreThanOne(lowerCaseDescription, validator)
   }
 
   "return false" when {
-    "password is empty" in {
-      assert(!passwordValidatorBuilder.isValid(""))
-    }
+    behave like isEmpty(validator)
 
-    "password hasn't digits chars" in {
-      assert(!passwordValidatorBuilder.isValid("aB#"))
-    }
+    behave like hasNotExpected(lowerCaseDescription, "aB#", validator)
   }
 }
