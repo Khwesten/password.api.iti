@@ -6,11 +6,9 @@ object MinimumSizeValidator {
   val DefaultMinimumPasswordLength = 9
 }
 
-class MinimumSizeValidator (
+case class MinimumSizeValidator (
   minimun: Int = MinimumSizeValidator.DefaultMinimumPasswordLength,
 ) extends PasswordValidator {
 
-  def validate(password: String): Boolean = {
-    password.size >= minimun
-  }
+  def validate(password: String): Boolean = password.size >= minimun
 }
