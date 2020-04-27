@@ -8,25 +8,25 @@ trait SharedAtLeastOneValidatorBehaviors extends SharedEmptyValidatorBehaviors {
   val hasAtLeastOnePassword = "a1Q!"
   val hasMoreThanOnePassword = "abc123QWE!@#"
 
-  def hasAtLeastOne(descriptionValue: String, validator: PasswordValidator) {
+  def hasAtLeastOne(descriptionValue: String, validator: PasswordValidator) = {
     s"has at least one ${descriptionValue}" in {
       assert(validator.validate(hasAtLeastOnePassword))
     }
   }
 
-  def hasOnly(descriptionValue: String, password: String, validator: PasswordValidator) {
+  def hasOnly(descriptionValue: String, password: String, validator: PasswordValidator) = {
     s"has only ${descriptionValue}" in {
       assert(validator.validate(password))
     }
   }
 
-  def hasMoreThanOne(descriptionValue: String, validator: PasswordValidator) {
+  def hasMoreThanOne(descriptionValue: String, validator: PasswordValidator) = {
     s"has more than one ${descriptionValue}" in {
       assert(validator.validate(hasMoreThanOnePassword))
     }
   }
 
-  def hasNotExpected(descriptionValue: String, password: String, validator: PasswordValidator) {
+  def hasNotExpected(descriptionValue: String, password: String, validator: PasswordValidator) = {
     s"password hasn't ${descriptionValue} chars" in {
       assert(!validator.validate(password))
     }
