@@ -20,3 +20,5 @@ lazy val root = (project in file(".")).
       "org.scalatest"     %% "scalatest"                % "3.0.8"         % Test
     )
   )
+
+scalacOptions ++= Seq("-deprecation", "-feature")
