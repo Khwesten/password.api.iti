@@ -6,22 +6,22 @@ import com.iti.passwordvalidationapi.validators.password.DefaultPasswordValidato
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 
-import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import io.circe.generic.auto._
+import com.iti.passwordvalidationapi.controllers.rejections.PasswordRejectionHandler
 
 class PasswordController extends BaseController {
 
   private def validatePassword = path("validatePassword") {
     post {
       entity(as[PasswordContract]) { contract =>
-        validate(contract.validate, contract.errorMessage) {
-          val validatorBuilder = DefaultPasswordValidatorBuilder.build()
+        val validatorBuilder = DefaultPasswordValidatorBuilder.build()
 
-          complete(validatorBuilder.isValid(contract.password))
-        }
+        complete(validatorBuilder.isValid(contract.password))
       }
     }
   }
 
-  val passwordRoutes = validatePassword
+  val passwordRoutes = handleRejections(PasswordRejectionHandler.handle) {
+    validatePassword
+  }
 }
